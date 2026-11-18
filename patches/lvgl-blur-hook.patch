@@ -1,0 +1,27 @@
+--- a/src/draw/sw/lv_draw_sw.c
++++ b/src/draw/sw/lv_draw_sw.c
+@@ -38,6 +38,14 @@
+ #define DRAW_UNIT_ID_SW     1
+ 
+ /**********************
++ *  GLOBAL VARIABLES
++ **********************/
++
++/** Optional hook around every blur task (called before and after the blur, `post` tells which).
++ *  Lets an application post-process the blurred area, e.g. a refractive "liquid glass" lens. */
++void (*lv_draw_sw_blur_hook)(lv_draw_task_t * t, const lv_draw_blur_dsc_t * dsc, const lv_area_t * coords, bool post);
++
++/**********************
+  *      TYPEDEFS
+  **********************/
+ 
+@@ -438,7 +446,9 @@
+             lv_draw_line_iterate(t, t->draw_dsc, lv_draw_sw_line);
+             break;
+         case LV_DRAW_TASK_TYPE_BLUR:
++            if(lv_draw_sw_blur_hook) lv_draw_sw_blur_hook(t, t->draw_dsc, &t->area, false);
+             lv_draw_sw_blur(t, t->draw_dsc, &t->area);
++            if(lv_draw_sw_blur_hook) lv_draw_sw_blur_hook(t, t->draw_dsc, &t->area, true);
+             break;
+         case LV_DRAW_TASK_TYPE_TRIANGLE:
+             lv_draw_sw_triangle(t, t->draw_dsc);

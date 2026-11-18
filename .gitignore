@@ -1,0 +1,25 @@
+# Ignore build folder
+/build/
+/bin/
+build-release/
+bin-fresh/
+bin-release/
+
+# Ignore all dot folders, with below exceptions
+.*/
+!.github/
+
+# VSCode
+.vscode
+
+# MacOS file
+.DS_Store
+
+build-static/
+build-static-rtos/
+bin-static/
+third_party_bin/
+/cache/
+photo_net_*.jpg
+
+build-web/
